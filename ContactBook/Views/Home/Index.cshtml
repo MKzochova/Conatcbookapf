@@ -1,18 +1,27 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Zoznam kontaktov";
 }
-@model List<Contact>
+@model List<ContactBook.Entities.Contact>
 
-<a href="Add" style="font: 5rem">+</a>
+<div style="margin-bottom: 20px;">
+    <a href="/Home/AddContact" style="font: 5rem">+</a>
+</div>
 
-<div class="text-center">
+<div>
     @foreach (var contact in Model)
     {
-        <div class="card">
-        <a href="detail/@contact.Id" style="color: red">@contact.Id</a>
-            <h1 style="color: brown">@contact.FirstName @contact.LastName</h1>
-        <p>@contact.Email</p>
-        </div>
+        <div class="card" style="margin-bottom: 10px; padding: 10px; border: 1px solid #ccc;">
+            <h3>
+                <a href="/Home/Detail/@contact.Id">@contact.FirstName @contact.LastName</a>
+            </h3>
+            <p>Email: @contact.Email | Telefón: @contact.Phone</p>
 
+            <a href="/Home/Edit/@contact.Id" style="color: blue;">Upraviť</a>
+
+            <form action="/Home/Delete" method="post" style="display:inline;">
+                <input type="hidden" name="id" value="@contact.Id" />
+                <button type="submit" style="color: red; border: none; background: none; cursor: pointer;">Vymazať</button>
+            </form>
+        </div>
     }
 </div>

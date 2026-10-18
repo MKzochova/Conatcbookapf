@@ -1,4 +1,4 @@
-﻿using ContactBook.Models;
+﻿using ContactBook.Entities;
 
 namespace ContactBook.Interface
 {

@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Upraviť kontakt";
+}
+@model ContactBook.Entities.Contact
+
+<h2>Upraviť kontakt</h2>
+
+<form action="/Home/Edit" method="post">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div>
+        <label>Meno:</label>
+        <input type="text" name="FirstName" value="@Model.FirstName" required />
+    </div>
+    <div>
+        <label>Priezvisko:</label>
+        <input type="text" name="LastName" value="@Model.LastName" required />
+    </div>
+    <div>
+        <label>Email:</label>
+        <input type="email" name="Email" value="@Model.Email" required />
+    </div>
+    <div>
+        <label>Telefón:</label>
+        <input type="text" name="Phone" value="@Model.Phone" />
+    </div>
+    <br />
+    <button type="submit">Uložiť zmeny</button>
+    <a href="/">Zrušiť</a>
+</form>

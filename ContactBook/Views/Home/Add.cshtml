@@ -1,9 +1,27 @@
 ﻿@{
-    ViewData["Title"] = "Add pageee";
+    ViewData["Title"] = "Pridať kontakt";
 }
-<form action="/Add" method="post">
-    <input type="type" name="FirstName" value="" />
-    <input type="type" name="LastName" value="" />
-    <input type="type" name="Email" value="" />
-    <button type="submit">Add Contact</button>
+
+<h2>Pridať nový kontakt</h2>
+
+<form action="/Home/AddContact" method="post">
+    <div>
+        <label>Meno:</label>
+        <input type="text" name="FirstName" required />
+    </div>
+    <div>
+        <label>Priezvisko:</label>
+        <input type="text" name="LastName" required />
+    </div>
+    <div>
+        <label>Email:</label>
+        <input type="email" name="Email" required />
+    </div>
+    <div>
+        <label>Telefón:</label>
+        <input type="text" name="Phone" />
+    </div>
+    <br />
+    <button type="submit">Pridať kontakt</button>
+    <a href="/">Zrušiť</a>
 </form>

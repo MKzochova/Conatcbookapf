@@ -1,27 +1,31 @@
-﻿using ContactBook.Models;
+﻿using ContactBook.Entities;
 using ContactBook.Interface;
+
 namespace ContactBook.Service
 {
-    public class ContactService : Interface.IContactService
+    public class ContactService : IContactService
     {
         private readonly AppDbContext _context;
+
         public ContactService(AppDbContext context)
         {
             _context = context;
         }
+
         public Contact Add(Contact contact)
         {
-            var book = new Entities.Contact();
+            var book = new Contact();
             book.FirstName = contact.FirstName;
-            book.LastName = contact.LastName;  
+            book.LastName = contact.LastName;
             book.Email = contact.Email;
+            book.Phone = contact.Phone;
             book.FullName = contact.FirstName + " " + contact.LastName;
 
-            _context.Add(book);
+            _context.Contacts.Add(book);
             _context.SaveChanges();
 
-            return contact;
-        }   
+            return book;
+        }
 
         public bool Delete(int id)
         {
@@ -36,20 +40,10 @@ namespace ContactBook.Service
             return true;
         }
 
-        public List<Contact> GetAll() {
+        public List<Contact> GetAll()
+        {
             var contacts = _context.Contacts.ToList();
-            var modelList = new List<Contact>();
-            for (int i = 0; i < contacts.Count; i++)
-            {
-                var model = new Contact();
-                model.Id = contacts[i].Id;
-                model.FirstName = contacts[i].FirstName;
-                model.LastName = contacts[i].LastName;
-                model.Email = contacts[i].Email;
-                modelList.Add(model);
-            }
-
-            return modelList;
+            return contacts;
         }
 
         public Contact GetById(int id)
@@ -59,15 +53,8 @@ namespace ContactBook.Service
             if (book == null)
             {
                 return new Contact();
-            }  
-            var model = new Contact();
-            model.Id = book.Id;
-            model.FirstName = book.FirstName;
-            model.LastName = book.LastName;
-            model.Email = book.Email;
-
-            return model;
-
+            }
+            return book;
         }
 
         public Contact Update(Contact contact)
@@ -82,11 +69,12 @@ namespace ContactBook.Service
             entity.FirstName = contact.FirstName;
             entity.LastName = contact.LastName;
             entity.Email = contact.Email;
+            entity.Phone = contact.Phone;
             entity.FullName = contact.FirstName + " " + contact.LastName;
 
             _context.Contacts.Update(entity);
             _context.SaveChanges();
-            return contact;
+            return entity;
         }
     }
 }

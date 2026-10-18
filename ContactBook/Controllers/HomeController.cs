@@ -1,6 +1,6 @@
 using System.Diagnostics;
-using ContactBook.Models;
 using ContactBook.Interface;
+using ContactBook.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContactBook.Controllers
@@ -33,40 +33,52 @@ namespace ContactBook.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-
+        [HttpGet]
         public IActionResult AddContact()
         {
-            return View();
+            return View("Add");
         }
 
         [HttpPost]
-        public IActionResult AddContact(Contact contact)
+        public IActionResult AddContact(ContactBook.Entities.Contact contact)
         {
             _contactService.Add(contact);
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public IActionResult Edit(Contact contact)
+        public IActionResult Detail(int id)
         {
-            if (ModelState.IsValid)
+            var contact = _contactService.GetById(id);
+            if (contact == null || contact.Id == 0)
             {
-                _contactService.Update(contact);
                 return RedirectToAction("Index");
             }
             return View(contact);
         }
 
-        
-        public IActionResult Detail(int id)
+        [HttpGet]
+        public IActionResult Edit(int id)
         {
             var contact = _contactService.GetById(id);
-            if (contact == null)
+            if (contact == null || contact.Id == 0)
             {
-                return View("Index");
+                return RedirectToAction("Index");
             }
             return View(contact);
         }
 
+        [HttpPost]
+        public IActionResult Edit(ContactBook.Entities.Contact contact)
+        {
+            _contactService.Update(contact);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            _contactService.Delete(id);
+            return RedirectToAction("Index");
+        }
     }
 }

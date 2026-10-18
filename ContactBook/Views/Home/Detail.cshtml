@@ -1,1 +1,14 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Detail kontaktu";
+}
+@model ContactBook.Entities.Contact
+
+<h2>Detail kontaktu</h2>
+
+<div class="card" style="padding: 20px; width: 300px; border: 1px solid #ccc;">
+    <h3>@Model.FirstName @Model.LastName</h3>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Telefón:</strong> @Model.Phone</p>
+</div>
+<br />
+<a href="/">Späť na zoznam</a>
